@@ -1,0 +1,10 @@
+span {
+    border: solid 1px black;
+    background: #888;
+    border-radius: 6px;
+    padding: 5px 5px;
+}
+
+.row {
+    height: 35px;
+}
