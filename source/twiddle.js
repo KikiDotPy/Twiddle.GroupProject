@@ -1,13 +1,36 @@
 const version = "1.00";
 
-function createKeys(keyboardRowElement, chars)
+// KEY
+class Key
 {
-    chars.split("").map(char =>  {
+    constructor(keyboardRowElement, char)
+    {
+        this.char = char;
+
+        // inject key element into DOM
         const keyElement = document.createElement("span");
         keyElement.innerHTML = char;
         keyboardRowElement.append(keyElement);
+
+        // hook up click event
+        keyElement.addEventListener("click", (e) => this.onClick());
+    }
+    
+    onClick()
+    {
+        console.log('key:' + this.char);
+    }
+}
+
+// KEYBOARD ROW
+function createKeys(keyboardRowElement, chars)
+{
+    chars.split("").map(char => {
+        const key = new Key(keyboardRowElement, char);
     });
 }
+
+// KEYBOARD
 function createRows(keyboardElement, rowsOfChars)
 {
     rowsOfChars.map(rowOfChars => {
@@ -19,7 +42,8 @@ function createRows(keyboardElement, rowsOfChars)
     });
 }
 
+
 const keyboardElement = document.getElementById("keyboard");
-createRows(keyboard, ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"]);
+createRows(keyboard, ["QWERTYUIOP", "ASDFGHJKL", " ZXCVBNM "]);
 
 console.debug(`Twiddle loaded v${version}.`);
