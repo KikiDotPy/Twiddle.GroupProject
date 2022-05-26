@@ -1,12 +1,26 @@
-span
+#keyboard span
 {
     border: solid 1px black;
     background: #888;
     border-radius: 6px;
-    padding: 5px 5px;
+    padding: 5px;
 }
 
-.row
+#keyboard .row
+{
+    height: 35px;
+}
+
+.gameBoardTile
+{
+    display: inline-block;
+    border: 1px solid black;
+    height: 30px;
+    width: 30px;
+    margin: 2px;
+}
+
+.gameBoardRow
 {
     height: 35px;
 }

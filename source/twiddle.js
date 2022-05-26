@@ -1,4 +1,4 @@
-const version = "1.00";
+const version = "1.01";
 
 // KEY
 class Key
@@ -13,6 +13,8 @@ class Key
         keyboardRowElement.append(keyElement);
 
         // hook up click event
+        // pattern: publish-subscribe
+        // event emitter
         keyElement.addEventListener("click", (e) => this.onClick());
     }
     
@@ -42,8 +44,51 @@ function createRows(keyboardElement, rowsOfChars)
     });
 }
 
+// GAMEBOARD
+class Tile
+{
+    constructor(gameBoardRowElement)
+    {
+        this.gameBoardTileElement = document.createElement("span");
+        this.gameBoardTileElement.classList.add("gameBoardTile");
+        gameBoardRowElement.append(this.gameBoardTileElement);
+        
+        // gameBoardTileElement.innerHTML = char;
+    }
+
+    get char()
+    {
+        return this.char;
+    }
+    set char(value)
+    {
+        this.gameBoardTileElement.innerHTML = value;
+    }
+}
+function createTiles(gameBoardRowElement, numberOfTiles, char)
+{
+    for(let i = 0; i < numberOfTiles; i++)
+    {
+        const tile = new Tile(gameBoardRowElement);
+        tile.char = char + i;
+    }
+}
+function createGameBoardRows(gameBoardElement, numberOfRows)
+{
+    for(let i = 0; i < numberOfRows; i++)
+    {
+        const gameBoardRowElement = document.createElement("div");
+        gameBoardRowElement.classList.add("gameBoardRow");
+        gameBoardElement.append(gameBoardRowElement);
+
+        createTiles(gameBoardRowElement, 5, "L");
+    }
+}
 
 const keyboardElement = document.getElementById("keyboard");
 createRows(keyboard, ["QWERTYUIOP", "ASDFGHJKL", " ZXCVBNM "]);
+
+const gameBoardElement = document.getElementById("gameBoard");
+createGameBoardRows(gameBoardElement, 6);
 
 console.debug(`Twiddle loaded v${version}.`);
