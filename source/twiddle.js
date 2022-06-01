@@ -1,5 +1,9 @@
 const version = "1.01";
 
+let gameBoard = null;
+
+// SCALE
+
 // KEY
 class Key
 {
@@ -21,6 +25,7 @@ class Key
     onClick()
     {
         console.log('key:' + this.char);
+        gameBoard.enterChar(this.char);
     }
 }
 
@@ -58,37 +63,51 @@ class Tile
 
     get char()
     {
-        return this.char;
+        return this.gameBoardTileElement.innerHTML;
     }
     set char(value)
     {
         this.gameBoardTileElement.innerHTML = value;
     }
 }
-function createTiles(gameBoardRowElement, numberOfTiles, char)
+class GameBoard
 {
-    for(let i = 0; i < numberOfTiles; i++)
+    constructor(gameBoardElement)
     {
-        const tile = new Tile(gameBoardRowElement);
-        tile.char = char + i;
+        this.createGameBoardRows(gameBoardElement, 6);
     }
-}
-function createGameBoardRows(gameBoardElement, numberOfRows)
-{
-    for(let i = 0; i < numberOfRows; i++)
-    {
-        const gameBoardRowElement = document.createElement("div");
-        gameBoardRowElement.classList.add("gameBoardRow");
-        gameBoardElement.append(gameBoardRowElement);
 
-        createTiles(gameBoardRowElement, 5, "L");
+    createTiles(gameBoardRowElement, numberOfTiles, char, rowIndex)
+    {
+        for(let tileIndex = 0; tileIndex < numberOfTiles; tileIndex++)
+        {
+            const tile = new Tile(gameBoardRowElement);
+            tile.char = char + rowIndex + "/" + tileIndex;
+            
+        }
+    }
+    createGameBoardRows(gameBoardElement, numberOfRows)
+    {
+        for(let i = 0; i < numberOfRows; i++)
+        {
+            const gameBoardRowElement = document.createElement("div");
+            gameBoardRowElement.classList.add("gameBoardRow");
+            gameBoardElement.append(gameBoardRowElement);
+
+            this.createTiles(gameBoardRowElement, 5, "L", i);
+        }
+    }
+    enterChar(char)
+    {
+        // this.tiles[0][0].char = char;
     }
 }
+
 
 const keyboardElement = document.getElementById("keyboard");
 createRows(keyboard, ["QWERTYUIOP", "ASDFGHJKL", " ZXCVBNM "]);
 
 const gameBoardElement = document.getElementById("gameBoard");
-createGameBoardRows(gameBoardElement, 6);
+gameBoard = new GameBoard(gameBoardElement);
 
 console.debug(`Twiddle loaded v${version}.`);
