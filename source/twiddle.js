@@ -73,8 +73,6 @@ class Tile
         this.gameBoardTileElement = document.createElement("span");
         this.gameBoardTileElement.classList.add("gameBoardTile");
         gameBoardRowElement.append(this.gameBoardTileElement);
-        
-        // gameBoardTileElement.innerHTML = char;
     }
 
     get isEmpty()
@@ -98,7 +96,7 @@ class Row
         gameBoardRowElement.classList.add("gameBoardRow");
         gameBoardElement.append(gameBoardRowElement);
 
-        this.createTiles(gameBoardRowElement, 5, "L");
+        this.createTiles(gameBoardRowElement, 5);
     }
     
     get numberOfTiles()
@@ -110,7 +108,7 @@ class Row
         return this.tiles.find(t => t.isEmpty);
     }
 
-    createTiles(gameBoardRowElement, numberOfTiles, char)
+    createTiles(gameBoardRowElement, numberOfTiles)
     {
         this.tiles = [];
 
