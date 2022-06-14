@@ -1,5 +1,9 @@
 const version = "1.01";
 
+const DELETE_KEY = "←";
+
+const ENTER_KEY = "↵";
+
 // KEYBOARD
 class Key
 {
@@ -16,6 +20,8 @@ class Key
         // hook up click event
         // pattern: publish-subscribe
         // event emitter
+        
+        // Single Responsibility (S.O.L.I.D.)
         keyElement.addEventListener("click", (e) => this.onClick());
     }
     
@@ -36,7 +42,7 @@ class Keyboard
     {
         this.listeners = [];
 
-        this.createRows(keyboardElement, ["QWERTYUIOP", "ASDFGHJKL", " ZXCVBNM "]);
+        this.createRows(keyboardElement, ["QWERTYUIOP", "ASDFGHJKL", ENTER_KEY + "ZXCVBNM" + DELETE_KEY]);
     }
     
     createRows(keyboardElement, rowsOfChars)
@@ -107,6 +113,11 @@ class Row
     {
         return this.tiles.find(t => t.isEmpty);
     }
+    get prevActiveTile()
+    {
+        const copyOfTiles = this.tiles.slice();
+        return copyOfTiles.reverse().find(t => !t.isEmpty);
+    }
 
     createTiles(gameBoardRowElement, numberOfTiles)
     {
@@ -120,7 +131,19 @@ class Row
     }
     enterChar(char)
     {
-        this.activeTile.char = char;
+        if(char == DELETE_KEY)
+        {
+            this.prevActiveTile.char = "";
+        }
+        else if (char == ENTER_KEY)
+        {
+            // TODO: handle enter key
+            console.log('enter pressed!');
+        }
+        else
+        {
+            this.activeTile.char = char;
+        }
     }
 }
 class GameBoard
