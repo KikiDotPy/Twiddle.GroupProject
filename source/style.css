@@ -18,6 +18,7 @@
     height: 30px;
     width: 30px;
     margin: 2px;
+    vertical-align: top;
 }
 
 .gameBoardRow
