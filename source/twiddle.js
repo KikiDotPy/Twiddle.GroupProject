@@ -1,7 +1,6 @@
 const version = "1.01";
 
 const DELETE_KEY = "←";
-
 const ENTER_KEY = "↵";
 
 // KEYBOARD
@@ -22,7 +21,10 @@ class Key
         // event emitter
         
         // Single Responsibility (S.O.L.I.D.)
-        keyElement.addEventListener("click", (e) => this.onClick());
+        keyElement.addEventListener("click", (e) => {
+            console.log(e);
+            this.onClick();
+        });
     }
     
     addPressedEventListener(listener)
@@ -33,6 +35,7 @@ class Key
     onClick()
     {
         // iterate obver all subscribers, and notify them
+        console.log(this.listeners);
         this.listeners.forEach(l => l());
     }
 }
@@ -105,6 +108,10 @@ class Row
         this.createTiles(gameBoardRowElement, 5);
     }
     
+    get isFilled()
+    {
+        return this.tiles.every(t => !t.isEmpty);
+    }
     get numberOfTiles()
     {
         return this.tiles.length;
@@ -170,7 +177,14 @@ class GameBoard
     }
     enterChar(char)
     {
-        // TODO: handle case when all rows are filled
+        if(this.rows.every(r => r.isFilled))
+        {
+            throw new Error("Game finished");
+        }
+        
+        // if(all rows are filled)
+        // ...then show error "Game finished"
+
         this.activeRow.enterChar(char);
     }
 }
